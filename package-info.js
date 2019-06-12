@@ -59,7 +59,7 @@ description = {
     "vue-template-compiler": "^2.5.2", //这个包可以用来预编译VUE模板到渲染函数，以避免运行时编译开销和CSP限制
     "webpack": "^3.6.0", //打包工具
     "webpack-bundle-analyzer": "^2.9.0", //可视化webpack输出文件的大小
-    "webpack-dev-server": "^2.9.1", //提供一个提供实时重载的开发服务器
+    "webpack-dev-server": ">=3.1.11", //提供一个提供实时重载的开发服务器
     "webpack-merge": "^4.1.0" //它将数组和合并对象创建一个新对象。如果遇到函数，它将执行它们，通过算法运行结果，然后再次将返回的值封装在函数中
   },
   //engines是引擎，指定node和npm版本
@@ -91,3 +91,26 @@ description = {
   * https://www.npmjs.com/package/url-loader
   * https://blog.csdn.net/qq_38652603/article/details/73835153 二者的区别详解
   */
+
+
+  /**
+   * "webpack-dev-server": ">=3.1.11" 
+   * 在3.1.11之前，webpack-dev-server中的lib/Server.js中发现了一个问题。
+   * 攻击者能够窃取开发人员的代码，是因为WebSocket服务器不检查请求的来源，而WebSocket服务器用于HMR(热模块替换)。
+   * 任何人都可以通过ws://127.0.0.1:8080/连接接收WebSocket服务器发送的HMR消息。
+   */
+
+
+   /**
+    * "webpack-bundle-analyzer": ">=3.3.2"
+    * 3.3.2之前的webpack-bundle-analyzer版本容易受到跨站点脚本的攻击。
+    * 该包使用JSON.stringify()，而没有正确转义可能导致跨站点脚本编写的输入。
+    */
+
+
+    /**
+     * "js-yaml": ">=3.13.1"
+     * 3.13.0之前的版本js-yaml很容易被拒绝服务。通过解析精心设计的YAML文件，节点进程会停止，并可能耗尽系统资源，导致拒绝服务。
+     * 3.13.1之前的Js-yaml容易受到代码注入的影响。load()函数可以执行通过恶意YAML文件注入的任意代码。
+     */
+
